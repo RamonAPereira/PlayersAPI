@@ -1,6 +1,6 @@
 ﻿namespace PlayersAPI.Enums
 {
-    public enum HerouGroup
+    public enum HeroGroup
     {
         Avengers,
         JusticeLeague

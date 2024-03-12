@@ -8,6 +8,6 @@ namespace PlayersAPI.Entities
         public required string Email { get; set; }
         public int Telefone { get; set; }
         public required string Nickname { get; set; }
-        public HeroGroup MyProperty { get; set; }
+        public HeroGroup group { get; set; }
     }
 }
