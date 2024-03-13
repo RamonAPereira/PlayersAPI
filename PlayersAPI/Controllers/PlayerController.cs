@@ -24,5 +24,16 @@ namespace PlayersAPI.Controllers
             List<Player> players = await _dataContext.Players.ToListAsync();
             return Ok(players);
         }
+        
+        [HttpGet("{nickame}")]
+
+        public async Task<ActionResult<List<Player>>> GetPlayer(string nickname)
+        {
+            Player? player = await _dataContext.Players.FindAsync(nickname);
+            if (player is null)
+                return NotFound("Hero not found");
+            
+            return Ok(player);
+        }
     }
 }
