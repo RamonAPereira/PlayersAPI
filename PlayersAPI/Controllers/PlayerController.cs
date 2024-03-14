@@ -62,5 +62,18 @@ namespace PlayersAPI.Controllers
 
             return Ok(await _dataContext.Players.ToListAsync());
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<List<Player>>> DeletePlayer(string nickname)
+        {
+            Player? Dbplayer = await _dataContext.Players.FindAsync(nickname);
+            if (Dbplayer is null)
+                return NotFound("Hero not found");
+
+           _dataContext.Players.Remove(Dbplayer);
+            await _dataContext.SaveChangesAsync();
+
+            return Ok(await _dataContext.Players.ToListAsync());
+        }
     }
 }
