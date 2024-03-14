@@ -27,13 +27,23 @@ namespace PlayersAPI.Controllers
         
         [HttpGet("{nickame}")]
 
-        public async Task<ActionResult<List<Player>>> GetPlayer(string nickname)
+        public async Task<ActionResult<Player>> GetPlayer(string nickname)
         {
             Player? player = await _dataContext.Players.FindAsync(nickname);
             if (player is null)
                 return NotFound("Hero not found");
             
             return Ok(player);
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult<List<Player>>> AddPlayer(Player player)
+        {
+             _dataContext.Players.Add(player);
+            await _dataContext.SaveChangesAsync();
+
+            return Ok(await _dataContext.Players.ToListAsync());
         }
     }
 }
