@@ -37,10 +37,27 @@ namespace PlayersAPI.Controllers
         }
 
         [HttpPost]
-
         public async Task<ActionResult<List<Player>>> AddPlayer(Player player)
         {
              _dataContext.Players.Add(player);
+            await _dataContext.SaveChangesAsync();
+
+            return Ok(await _dataContext.Players.ToListAsync());
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<List<Player>>> UpdatePlayer(Player updatedPlayer)
+        {
+            Player? Dbplayer = await _dataContext.Players.FindAsync(updatedPlayer.Nickname);
+            if (Dbplayer is null)
+                return NotFound("Hero not found");
+
+            Dbplayer.Name = updatedPlayer.Name;
+            Dbplayer.Email = updatedPlayer.Email;
+            Dbplayer.Telefone = updatedPlayer.Telefone;
+            Dbplayer.Group = updatedPlayer.Group;
+            Dbplayer.Nickname = updatedPlayer.Nickname;
+
             await _dataContext.SaveChangesAsync();
 
             return Ok(await _dataContext.Players.ToListAsync());
